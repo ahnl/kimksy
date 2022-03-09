@@ -5,10 +5,12 @@
 #include "Network.hpp"
 
 void setup() {
+    // Initializing
     Servos::attach();
     pinMode(BUZZER_PIN, OUTPUT);
     Serial.begin(115200);
 
+    // Start networking
     Network::connectWiFi();
     Network::Server::begin();
     Network::updateDdns();
@@ -17,6 +19,7 @@ void setup() {
 }
 
 void loop() {
+    // HTTP server loop
     Network::server.handleClient();
 }
 
