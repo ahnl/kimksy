@@ -3,7 +3,6 @@
 #include "Servo.h"
 #include "Config.hpp"
 
-// to-do: check how to make namespace stuff private
 namespace Control {
     namespace Servos {
         Servo servoA;
