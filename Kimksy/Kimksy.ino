@@ -1,13 +1,12 @@
 #include <WiFiClient.h>
 
 #include "Config.hpp"
-#include "Servos.hpp"
+#include "Control.hpp"
 #include "Network.hpp"
 
 void setup() {
     // Initializing
-    Servos::attach();
-    pinMode(BUZZER_PIN, OUTPUT);
+    Control::init();
     Serial.begin(115200);
 
     // Start networking
@@ -21,5 +20,8 @@ void setup() {
 void loop() {
     // HTTP server loop
     Network::server.handleClient();
+
+    // Servo and sound loop
+    Control::loop();
 }
 

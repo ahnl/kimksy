@@ -5,7 +5,7 @@
 #include "ESP8266WebServer.h"
 
 #include "Config.hpp"
-#include "Servos.hpp"
+#include "Control.hpp"
 
 namespace Network {
     ESP8266WebServer server(80);
@@ -23,27 +23,17 @@ namespace Network {
     namespace Server {
         void handleApiHalt() {
             server.send(200, "text/plain", "Halttista :D");
-            
-            // to-do: implement servo halt logic
-            tone(BUZZER_PIN, 500, 1700);
-            delay(1700);
-            noTone(BUZZER_PIN);
+            Control::halt();
         }
 
-        void handleApiOn() {
+        void handleApiShred() {
             server.send(200, "text/plain", "Abrakadabra");
-
-            Servos::start();  
-            for (int i = 0; i <= 18; i++) {
-                tone(BUZZER_PIN, 500, 450);
-                delay(900);
-            }
-            Servos::stop();
+            Control::shred();
         }
 
         void handleRootPath() {   
             server.send(200, "text/html", "<meta name='viewport' content='width=device-width, initial-scale=1.0'><meta charset='utf-8'><style>button{-webkit-appearance: none;flex:1;font-size: 3rem;background:#663333;font-weight:bold;cursor:pointer;color:beige;font-family: sans-serif;}button:hover{background-color:#996600;}body{display:flex;flex-direction: column;max-width: 800px;margin: 0 auto;}</style>"
-                        "<button data-action='full'>Silppuroi!</button>"
+                        "<button data-action='shred'>Silppuroi!</button>"
                         "<button data-action='halt'>Hätä seis</button>"
                         "<button data-action='reverse'>Revöörs</button>"
                         "<script>document.addEventListener(\"click\", (e) => {if(e.target.dataset.action){fetch(\"/api/\"+e.target.dataset.action)}})</script>");
@@ -51,7 +41,7 @@ namespace Network {
 
         void begin() {
             server.on("/", handleRootPath);
-            server.on("/api/full", handleApiOn);
+            server.on("/api/shred", handleApiShred);
             server.on("/api/halt", handleApiHalt);
             server.begin(); 
         }
