@@ -31,6 +31,11 @@ namespace Network {
             Control::shred();
         }
 
+        void handleApiReverse() {
+            server.send(200, "text/plain", "arbadakarbA");
+            Control::reverse();
+        }
+
         void handleRootPath() {   
             server.send(200, "text/html", "<meta name='viewport' content='width=device-width, initial-scale=1.0'><meta charset='utf-8'><style>button{-webkit-appearance: none;flex:1;font-size: 3rem;background:#663333;font-weight:bold;cursor:pointer;color:beige;font-family: sans-serif;}button:hover{background-color:#996600;}body{display:flex;flex-direction: column;max-width: 800px;margin: 0 auto;}</style>"
                         "<button data-action='shred'>Silppuroi!</button>"
@@ -42,6 +47,7 @@ namespace Network {
         void begin() {
             server.on("/", handleRootPath);
             server.on("/api/shred", handleApiShred);
+            server.on("/api/reverse", handleApiReverse);
             server.on("/api/halt", handleApiHalt);
             server.begin(); 
         }

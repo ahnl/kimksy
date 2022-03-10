@@ -15,9 +15,14 @@ namespace Control {
             servoA.writeMicroseconds(SERVO_A_STOP);
             servoB.writeMicroseconds(SERVO_B_STOP);
         }
-        void start() {
-            servoA.write(0);
-            servoB.write(3000);
+        void start(bool reverse = false) {
+            if (reverse) {
+                servoB.write(0);
+                servoA.write(3000);
+            } else {
+                servoA.write(0);
+                servoB.write(3000);
+            }
         }
         void stop() {
             servoA.write(SERVO_A_STOP);
@@ -39,6 +44,10 @@ namespace Control {
     }
     void shred() {
         Servos::start();  
+        setState(SHREDDING);
+    }
+    void reverse() {
+        Servos::start(true);  
         setState(SHREDDING);
     }
     void halt() {
