@@ -13,3 +13,17 @@ Our IoT paper shredder exposes a web server for controlling it and it is able to
 * Buzzer
 
 The pins can be configured in `Kimksy/Config.hpp`. Remember also to configure WiFi connection and optionally DDNS.
+
+## DDNS
+
+We have set up our DDNS server using Pipedream workflows. It receives the device's IP address by a GET request and updates it into Cloudflare's DNS record.
+
+Live Kimksy can be accessed at http://kimksy.vety.xyz (works only in the nearby LAN).
+
+[Our DDNS server setup (via Pipedream)](https://pipedream.com/@ahnl/kimksy-ddns-p_13CWypy)
+
+## Troubleshooting
+
+### How to get an IP address
+Connect the device to your computer and open serial monitor at baud rate 115200. Press the reset button on the device, and the device will print its IP address once a WiFi connection is established.
+
